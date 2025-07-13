@@ -18,19 +18,32 @@ import { StoreProvider } from "./Controller/context/StoreContext";
 
 
 import Pay from "./View/pages/Pay"
+import { UserProvider } from "./Controller/context/UserContext";
 
 // Pages
 const Home = lazy(() => import('./View/pages/Home'));
 const Store = lazy(() => import('./View/pages/Store'));
 const About = lazy(() => import('./View/pages/About'));
 
+// Autenticación
+const Login = lazy(() => import('./View/pages/auth/Login'));
+const Register = lazy(() => import('./View/pages/auth/Register'));
+
+// Usuario
+const Profile = lazy(() => import('./View/pages/user/Profile'));
+
+// Admin
+const Dashboard = lazy(() => import('./View/pages/Dashboard'));
+
 function App() {
   return (
     <>
       <Suspense fallback={<div>Cargando...</div>}>
           
-          <ShoppingCartProvider>
+          
+          <UserProvider>
           <StoreProvider>
+          <ShoppingCartProvider>
             <Navbar />
             <Container className='mb-4'>
               <Routes>
@@ -43,11 +56,24 @@ function App() {
                 <Route path='/pay' element={<Pay />} />
 
                 <Route path='/about' element={<About />} />
+
+                {/* Rutas de autenticación */}
+                <Route path='/login' element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+
+                {/* Rutas de usuario */}
+                <Route path='/profile' element={<Profile />} />
+
+                {/* Rutas de administrador */}
+                <Route path='/dashboard' element={<Dashboard />} />
               </Routes>
             </Container>
           
-          </StoreProvider>
           </ShoppingCartProvider>
+          </StoreProvider>
+          </UserProvider>
+          
 
         </Suspense>
     </>

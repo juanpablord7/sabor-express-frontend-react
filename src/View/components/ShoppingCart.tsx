@@ -2,35 +2,55 @@ import { Offcanvas, Button, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../../Controller/context/ShoppingCartContext";
 import { ShopCartItem } from "./CartItem";
 import { formatCurrency } from "../../Controller/utilities/formatCurrency";
-import { useNavigate } from "react-router-dom" // <-- Importamos el hook
-import { findProducts } from "../../Model/services/productsService";
+import { findProducts } from "../../Model/services/productService";
 import { useEffect, useState } from "react";
 import { Product } from "../../Model/types/productTypes";
-
-
+import { createMyOrder } from "../../Model/services/orderService";
+import { useUser } from "../../Controller/context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 type ShoppingCartProps = {
     isOpen: boolean
 }
 
 export function ShoppingCart({ isOpen }: ShoppingCartProps){
-    const { closeCart, cartItems } = useShoppingCart()
+    const { closeCart, cartItems, removerFromCart } = useShoppingCart()
     
-    const navigate = useNavigate() // <-- Inicializamos el hook de navegación
-    
+    const { user } = useUser();
     const [cartProducts, setCartProducts] = useState<Product[] | null>(null)
 
     async function fetchCartProducts() {
         const idsProducts: number[] = cartItems.map(item => item.id)
 
         const response = await findProducts(idsProducts);
-        setCartProducts(response.products);
-        console.log(response.products)
+        setCartProducts(response);
+    }
+
+    const navigate = useNavigate();
+
+    const handleCreateOrder = async () => {
+        if(user){
+            const productsOrder: number[] = [];
+            const quantitiesOrder: number[] = [];
+            cartItems.map(item => {
+                productsOrder.push(item.id)
+                quantitiesOrder.push(item.quantity)
+                removerFromCart(item.id)
+            })
+            await createMyOrder(productsOrder, quantitiesOrder);
+
+        }else{
+            navigate("/login");
+        }
+        
     }
 
     useEffect(()=>{
-        fetchCartProducts();
-    }, [])
+        if(!cartProducts || (cartProducts.length !== cartItems.length)){
+            fetchCartProducts();
+        }
+
+    }, [isOpen, cartItems])
 
     return <Offcanvas 
         show={isOpen} 
@@ -49,8 +69,7 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps){
                         let product:Product | null = null;
                         if(cartProducts){
                             product = cartProducts.find(i => {
-                                console.log(i)
-                                if(i.product_id == item.id) return i;
+                                if(i.id == item.id) return i;
                             }) || null
                             /*
                             product = cartProducts.find(i => i.product_id == item.id)
@@ -64,7 +83,7 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps){
                     <div className="ms-auto fs-5">
                         Total: {" "}
                         {formatCurrency(cartItems.reduce( (total, CartItem) => {
-                            const product= cartProducts?.find(i => i.product_id === CartItem.id);
+                            const product= cartProducts?.find(i => i.id === CartItem.id);
                             return total + ( product?.price || 0) * CartItem.quantity
                         }, 0))}
                     </div>
@@ -72,14 +91,13 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps){
 
                 <div className="d-flex justify-content-center">
                     <Button 
-                        className="pay_button neon-pulse"
                         style={{ width: "70%" }}
                         onClick={() => {
-                        closeCart()
-                        navigate("/pay")
+                            closeCart()
+                            handleCreateOrder()
                         }}
                     >
-                        Pay
+                        Registrar Orden
                     </Button>
                 </div>
         </Offcanvas.Body>

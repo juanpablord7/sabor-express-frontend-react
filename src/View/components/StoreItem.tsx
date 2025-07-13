@@ -2,24 +2,21 @@ import { Button, Card } from "react-bootstrap"
 import { formatCurrency } from "../../Controller/utilities/formatCurrency"
 import { useShoppingCart } from "../../Controller/context/ShoppingCartContext"
 import { Product } from "../../Model/types/productTypes";
+import { imagePath } from "../../Model/services/imageService";
 
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
-
-export function StoreItem({ product_id, name, price, image}: Product){
+export function StoreItem({ id, name, price, image}: Product){
     const { getItemQuantity,
         increaseQuantity,
         decreaseQuantity,
         removerFromCart} = useShoppingCart()
-    const quantity = getItemQuantity(product_id)
-
-    const imageUrl = baseURL + '/image/' + image;
-    console.log(imageUrl)
+        
+    const quantity = getItemQuantity(id)
     
     return <Card className="h-100">
         <Card.Img 
             variant="top" 
-            src={imageUrl}
+            src={imagePath + image}
             height= "200px"
             style={{objectFit:"cover" }}/>
         <Card.Body 
@@ -35,7 +32,7 @@ export function StoreItem({ product_id, name, price, image}: Product){
             <div className="mt-auto">
                 {quantity === 0 ? (
                     <Button className="w-100" 
-                        onClick={() => increaseQuantity(product_id, name)}>
+                            onClick={() => increaseQuantity(id, name)}>
                         + Add To Cart
                     </Button>
                 ) : 
@@ -47,16 +44,16 @@ export function StoreItem({ product_id, name, price, image}: Product){
                             className="d-flex align-items-center
                             justify-content-center" style={{gap:".5rem"}}
                         >
-                            <Button onClick={() => decreaseQuantity(product_id)}>-</Button>
+                            <Button onClick={() => decreaseQuantity(id)}>-</Button>
                             <div>
                                 <span className="fs-3">{quantity}</span>
                                 in cart
                             </div>
-                            <Button onClick={() => increaseQuantity(product_id, name)}>+</Button>       
+                            <Button onClick={() => increaseQuantity(id, name)}>+</Button>       
                         </div>
                         <Button variant="danger" 
                             size="sm"
-                            onClick={() => removerFromCart(product_id)}
+                            onClick={() => removerFromCart(id)}
                         >
                             Remove
                         </Button>

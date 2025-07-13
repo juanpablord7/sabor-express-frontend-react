@@ -1,18 +1,49 @@
-import { useEffect, useState } from "react";
-import axios from 'axios';
+import api from "../services/axiosService";
+import { User } from "../types/usertypes";
+import axios from "axios";
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 //Endpoint POST /api/products
-export async function login() {
+export async function login(username: string | null,
+    email: string | null,
+    password: string){
+    
+    const body: any = { password };
+    if (username) body.username = username;
+    else if (email) body.email = email;
+
+    try{
+        console.log("body: " + body.username + " " + body.password)
+        const res = await axios.post(`${baseURL}/user/auth/login`, body);
+        const token: string = res.data;
+        return {success: true, token};
+    }catch(err){
+        return {success:false, error: err};
+    }   
 }
 
-//Endpoint PUT /api/products
-export async function replaceProfile() {
-}
+export async function register(username: string,
+    fullname: string,
+    email: string,
+    password: string) :
+    
+    Promise<{ success: true; user: User } | { success: false; error: unknown }> {
+ 
+    const body: any = { 
+        username,
+        fullname,
+        email,
+        password
+    };
 
-//Endpoint PATCH /api/products
-export async function updateProfile() {
-}
+    try{
+        const res = await api.post(`${baseURL}/user/auth/register`, body);
 
-//Endpoint DELETE /api/products
-export async function deleteProfile() {
+        const user: User = res.data;
+
+        return {success: true, user};
+    }catch(err){
+        return {success:false, error: err};
+    }   
 }

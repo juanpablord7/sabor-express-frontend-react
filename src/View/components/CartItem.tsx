@@ -3,21 +3,18 @@ import { useShoppingCart } from "../../Controller/context/ShoppingCartContext"
 import { formatCurrency } from "../../Controller/utilities/formatCurrency"
 import { CartItem } from "../../Model/types/cartItemTypes";
 import { Product } from "../../Model/types/productTypes";
+import { imagePath } from "../../Model/services/imageService";
 
 type ShopCartItemProps = {
     product: Product | null;
     cartItem: CartItem;
 }
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
-
 export function ShopCartItem({ product, cartItem }: ShopCartItemProps) {
     const { removerFromCart } = useShoppingCart()
-    
-    let imageUrl = baseURL + '/image/'
-    if(product){
-        imageUrl += product.image; 
-    }
+
+    console.log(imagePath)
+
 
     return (
         <>
@@ -29,7 +26,7 @@ export function ShopCartItem({ product, cartItem }: ShopCartItemProps) {
                 {product && (
                     <img
                         className="justify-content-center"
-                        src={imageUrl}
+                        src={imagePath + product.image}
                         height="75px"
                         style={{
                         aspectRatio: "1/1",
