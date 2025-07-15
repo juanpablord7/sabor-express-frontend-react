@@ -1,59 +1,51 @@
 import { Container } from "react-bootstrap"
-
-// Efficient charge of routes
 import { Suspense, lazy } from 'react';
-
 import { Routes, Route } from "react-router-dom"
 
+//Style
 import "./styles/App.css"
 
+// ********************** Context **********************
+//Context of User
+import { UserProvider } from "./Controller/Context/UserContext";
+
+// Context of Shopping Cart
+import { ShoppingCartProvider } from "./Controller/Context/ShoppingCartContext"
+
+// ********************** Pages **********************
+const Home = lazy(() => import('./View/Pages/Home'));
+const Store = lazy(() => import('./View/Pages/Store'));
+const About = lazy(() => import('./View/Pages/About'));
+
+// Authentication
+const Login = lazy(() => import('./View/Pages/Authentication/Login'));
+const Register = lazy(() => import('./View/Pages/Authentication/Register'));
+
+// Profile
+const Profile = lazy(() => import('./View/Pages/Profile/Profile'));
+
+// Dashboard
+const Dashboard = lazy(() => import('./View/Pages/Dashboard/Dashboard'));
+
+// ********************** Components **********************
 // Navbar
-import { Navbar } from "./View/components/Navbar"
-
-// Context of Shopping Car
-import { ShoppingCartProvider } from "./Controller/context/ShoppingCartContext"
-
-//Context of Products
-import { StoreProvider } from "./Controller/context/StoreContext";
-
-
-import Pay from "./View/pages/Pay"
-import { UserProvider } from "./Controller/context/UserContext";
-
-// Pages
-const Home = lazy(() => import('./View/pages/Home'));
-const Store = lazy(() => import('./View/pages/Store'));
-const About = lazy(() => import('./View/pages/About'));
-
-// Autenticación
-const Login = lazy(() => import('./View/pages/auth/Login'));
-const Register = lazy(() => import('./View/pages/auth/Register'));
-
-// Usuario
-const Profile = lazy(() => import('./View/pages/user/Profile'));
-
-// Admin
-const Dashboard = lazy(() => import('./View/pages/Dashboard'));
+import { Navbar } from "./View/Components/Navbar/Navbar"
 
 function App() {
   return (
     <>
       <Suspense fallback={<div>Cargando...</div>}>
-          
-          
+          {/* Contexts */}
           <UserProvider>
-          <StoreProvider>
           <ShoppingCartProvider>
+            {/* Navbar */}
             <Navbar />
             <Container className='mb-4'>
+              {/* Routes */}
               <Routes>
                 <Route path='/' element={<Home />} />
 
-                
                 <Route path='/store' element={<Store />} />
-                
-
-                <Route path='/pay' element={<Pay />} />
 
                 <Route path='/about' element={<About />} />
 
@@ -68,12 +60,11 @@ function App() {
                 {/* Rutas de administrador */}
                 <Route path='/dashboard' element={<Dashboard />} />
               </Routes>
+              
             </Container>
           
           </ShoppingCartProvider>
-          </StoreProvider>
           </UserProvider>
-          
 
         </Suspense>
     </>

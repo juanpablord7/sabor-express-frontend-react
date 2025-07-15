@@ -1,8 +1,12 @@
 import { createContext, ReactNode, useContext, useEffect } from "react";
-import { User } from "../../Model/types/usertypes";
-import { useLocalStorage } from "../../Model/services/localStorage/useLocalStorage";
-import { Role } from "../../Model/types/roletypes";
-import { getRoleById } from "../../Model/services/roleService";
+import { useLocalStorage } from "../LocalStorage/useLocalStorage";
+
+//Types:
+import { Role } from "../../Model/Types/Roletypes";
+import { User } from "../../Model/Types/Usertypes";
+
+//Services:
+import { getRoleById } from "../../Model/Services/Role/index";
 
 type UserContextType = {
   user: User | null;

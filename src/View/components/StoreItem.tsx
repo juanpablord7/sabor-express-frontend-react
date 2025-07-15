@@ -1,9 +1,12 @@
 import { Button, Card } from "react-bootstrap"
-import { formatCurrency } from "../../Controller/utilities/formatCurrency"
-import { useShoppingCart } from "../../Controller/context/ShoppingCartContext"
-import { Product } from "../../Model/types/productTypes";
-import { imagePath } from "../../Model/services/imageService";
+import { formatCurrency } from "../../Controller/Utilities/formatCurrency"
 
+//Contexts:
+import { useShoppingCart } from "../../Controller/Context/ShoppingCartContext"
+
+//Types:
+import { Product } from "../../Model/Types/ProductTypes";
+import { imagePath } from "../../Model/Services/Image/index";
 
 export function StoreItem({ id, name, price, image}: Product){
     const { getItemQuantity,
@@ -33,7 +36,7 @@ export function StoreItem({ id, name, price, image}: Product){
                 {quantity === 0 ? (
                     <Button className="w-100" 
                             onClick={() => increaseQuantity(id, name)}>
-                        + Add To Cart
+                        + Añadir al Carrito
                     </Button>
                 ) : 
                     <div 
@@ -46,8 +49,8 @@ export function StoreItem({ id, name, price, image}: Product){
                         >
                             <Button onClick={() => decreaseQuantity(id)}>-</Button>
                             <div>
-                                <span className="fs-3">{quantity}</span>
-                                in cart
+                                <span className="fs-3">{quantity} </span>
+                                en el carrito
                             </div>
                             <Button onClick={() => increaseQuantity(id, name)}>+</Button>       
                         </div>

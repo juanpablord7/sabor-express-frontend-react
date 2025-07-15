@@ -1,79 +1,107 @@
 import { Col, Row, Image, Button, Pagination } from "react-bootstrap"
-import { StoreItem } from "../components/StoreItem"
+import { StoreItem } from "../Components/StoreItem"
 import { useEffect, useState } from "react"
-import { Product } from "../../Model/types/productTypes"
-import { getProducts } from "../../Model/services/productService"
-import { Category } from "../../Model/types/CategoryTypes"
-import { getCategories } from "../../Model/services/categoryService"
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+//Types:
+import { Product } from "../../Model/Types/ProductTypes"
+import { Category } from "../../Model/Types/CategoryTypes"
+
+//Services:
+import { getProducts } from "../../Model/Services/Product/index"
+import { getCategories } from "../../Model/Services/Category/index"
+import { imagePath } from "../../Model/Services/Image/index"
 
 export default function Store() {
-
+  // Pagination
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
+  const [totalPages, setTotalPages] = useState(0);
 
+  //Products Data
   const [products, setProducts] = useState<Product[]>([]);
-  const [totalItems, setTotalItems] = useState(0);
-  const [loading, setLoading] = useState(false);
-
+  const [totalProducts, setTotalProducts] = useState(0);
+  
+  //Categories Data
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined);
 
+  //State Control
+  const [loading, setLoading] = useState(false);
 
-  const totalPages = Math.ceil(totalItems/limit);
+  //Fetch Categories when the component first time render 
+  useEffect(() => {
+    fetchCategory();
+  }, []);
 
+  //Fetch Products when the page, limit or selected category changes
+  useEffect(() => {
+    fetchProduct();
+    
+    
+
+  }, [page, limit, selectedCategory])
+
+  //Fetch Products when page, limit change
   const fetchProduct = async () => {
     setLoading(true);
 
-    const { products, totalItems } = await getProducts(page - 1, limit, selectedCategory);
+    const { products, totalItems } = await getProducts(page, limit, selectedCategory);
     setProducts(products);
-    setTotalItems(totalItems);
+    await setTotalProducts(totalItems);
+
+    setTotalPages(Math.ceil(totalProducts/limit));
+
     setLoading(false);
   };
 
+  //Fetch Categories just first time
   const fetchCategory = async () => {
     try {
       const allCategories: Category[] = await getCategories();
 
-      // Mover la categoría con id = 0 al final
+      // Reorder the "Other" Category to be the last
       const reordered = allCategories.filter(c => c.id !== 0);
       const categoryZero = allCategories.find(c => c.id === 0);
       if (categoryZero) reordered.push(categoryZero);
 
+      //Set the Categories
       setCategories(reordered);
+
     } catch (err) {
       console.error("Error fetching categories", err);
     }
   };
 
-  useEffect(() => {
-    fetchCategory();
-  }, []);
-
-  useEffect(() => {
-    fetchProduct(); // Se llama cada vez que page o limit cambian
-  }, [page, limit, selectedCategory])
-
+  //Change the Limit
   const changeLimit = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const value = parseInt(e.target.value);
-      setPage(1);
-      setLimit(value);
+    //Set the limit value
+    const value = parseInt(e.target.value);
+    setLimit(value);
+
+    //Set page 1
+    setPage(1);
   };
   
+  //Selected a Category
   const handleCategorySelect = (id?: number) => {
-      setSelectedCategory(id);
-      setPage(1);
+    //Set the selected Category
+    setSelectedCategory(id);
+
+    //Set page 1
+    setPage(1);
   };
 
+  //Loading the page
   if (loading) return <div>Cargando productos...</div>;
 
-    return (
+  return (
     <>
-      <h1>Store</h1>
+      <h1>Tienda</h1>
 
-      {/* CATEGORÍAS COMO BOTONES */}
+      {/* Button of Categories */}
       <div className="d-flex flex-wrap gap-2 mb-3">
+
+        {/* Button Category "All" */}
         <Button
           variant={selectedCategory === undefined ? "primary" : "outline-primary"}
           className="rounded-pill d-flex align-items-center gap-2"
@@ -82,6 +110,7 @@ export default function Store() {
           Todos
         </Button>
 
+        {/* Other Buttons Category */}
         {categories.map((cat) => (
           <Button
             key={cat.id}
@@ -89,13 +118,13 @@ export default function Store() {
             className="rounded-pill d-flex align-items-center gap-2"
             onClick={() => handleCategorySelect(cat.id)}
           >
-            <Image src={baseURL + "/image/" + cat.image} width={24} height={24} roundedCircle />
+            <Image src={ imagePath + cat.image} width={24} height={24} roundedCircle />
             {cat.name}
           </Button>
         ))}
       </div>
 
-      {/* SELECTOR DE LÍMITE */}
+      {/* Limit Selector */}
       <div style={{
         display: "flex",
         justifyContent: "flex-end", // Alínea a la izquierda
@@ -139,7 +168,7 @@ export default function Store() {
         </div>
       </div>
 
-      {/* PRODUCTOS */}
+      {/* Products */}
       <Row lg={3} md={2} className="g-3">
         {products.map((item) => (
           <Col key={item.id}>
@@ -148,14 +177,16 @@ export default function Store() {
         ))}
       </Row>
 
-      {/* PAGINACIÓN */}
+      {/* Pagination */}
       {totalPages > 1 && (
           <Pagination>
             {Array.from({ length: totalPages }, (_, i) => (
               <Pagination.Item
                 key={i + 1}
                 active={i + 1 === page}
-                onClick={() => setPage(i + 1)}
+                onClick={() => {
+                  console.log(i + 1);
+                  setPage(i + 1)}}
               >
                 {i + 1}
               </Pagination.Item>

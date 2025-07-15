@@ -1,0 +1,1 @@
+export const useMock = import.meta.env.VITE_APP_USE_MOCK === "true";

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default  function Home() {
   return (
     <div className="text-center">
-      {/* Imagen destacada tipo banner */}
+      {/* Banner */}
       <div 
         className="bg-dark text-white d-flex flex-column justify-content-center align-items-center"
         style={{
@@ -15,6 +15,7 @@ export default  function Home() {
           width: '100%',
         }}
       >
+        {/* Welcome Message */}
         <h1 className="display-4 fw-bold">Bienvenido a SaborExpress 🍽️</h1>
         <p className="lead">Comida deliciosa, rápida y al mejor precio.</p>
         <Link to="/store">
@@ -24,7 +25,6 @@ export default  function Home() {
         </Link>
       </div>
 
-      {/* Sección de ventajas o características */}
       <div className="py-5 px-3">
         <h2 className="mb-4">¿Por qué elegirnos?</h2>
         <div className="row">
