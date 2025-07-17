@@ -39,12 +39,12 @@ This repository has the *Frontend* of the project, developed with
 ## Tabla de Contenidos
 
 - [💻 Tecnologías](#tecnologías)
-- [🧩 Características](#🧩-características)
-- [🧠 Lógica de Negocio](#🧠-lógica-de-negocio)
-- [🎯 Propósito del Proyecto](#🎯-propósito-del-proyecto)
-- [💾 Instalación](#💾-installation)
-- [🔗 Documentacion de la API ](#🔗-api-documentation)
-- [👤 Autor](#👤-author)
+- [🧩 Características](#características)
+- [🧠 Lógica de Negocio](#lógica-de-negocio)
+- [🎯 Propósito del Proyecto](#propósito-del-proyecto)
+- [💾 Instalación](#installation)
+- [🔗 Documentacion de la API ](#api-documentation)
+- [👤 Autor](#author)
 
 ## Tecnologías
 
@@ -54,7 +54,7 @@ React - Framework de Frontend
 
 Bootstrap CSS - Framework de Estilizado para diseño responsivo y componentes visuales.
 
-## 🧩 Características
+## Características
 
 ### Caracteristicas Principales:
 - 🛒 E-commerce enfocado en comidas rápidas
@@ -85,10 +85,10 @@ Bootstrap CSS - Framework de Estilizado para diseño responsivo y componentes vi
 - 🔐 Autenticación en dos pasos (2FA)
 - 🤖 Sugerencias inteligentes de comidas según preferencias y restricciones (ej. vegano, diabetico, sin gluten, bajo en grasa, etc.), basada en inteligencia artificial
 
-## 🧠 Lógica de Negocio
+## Lógica de Negocio
 Para la Lógica de Negocio, roles y funcionalidades del backend, reviselo aqui: [Backend Repository](https://github.com/tu-usuario/backend).
 
-## 🎯 Propósito del Proyecto
+## Propósito del Proyecto
 Este proyecto fue desarrollado con el objetivo de aprender e implementar multiples aspectos clave del desarrollo web moderno:
 
 - 🛒 Plataforma e-commerce funcional y realista, capaz de gestionar pedidos directamente desde la web para los empleados segun su rol.
@@ -108,21 +108,21 @@ Este proyecto fue desarrollado con el objetivo de aprender e implementar multipl
 
 ## Table of Contents
 
-- [💻 Technologies](#💻-technologies)
-- [🧩 Features](#🧩-features)
-- [🧠 Business Logic](#🧠-business-logic)
-- [🎯 Project Purpose](#🎯-project-purpose)
-- [💾 Installation](#💾-installation)
-- [🔗 API Documentation](#🔗-api-documentation)
-- [👤 Author](#👤-author)
+- [💻 Technologies](#technologies)
+- [🧩 Features](#features)
+- [🧠 Business Logic](#business-logic)
+- [🎯 Project Purpose](#project-purpose)
+- [💾 Installation](#installation)
+- [🔗 API Documentation](#api-documentation)
+- [👤 Author](#author)
 
-## 💻 Technologies
+## Technologies
 
 TypeScript – Programming Language
 React – Framework Frontend
 Bootstrap CSS – Styling framework for responsive design and UI components.
 
-## 🧩 Features
+## Features
 
 ### Main Features:
 - 🛒 Fast-food-focused e-commerce
@@ -153,10 +153,10 @@ Bootstrap CSS – Styling framework for responsive design and UI components.
 - 🔐 Two-factor authentication (2FA)
 - 🤖 Smart food suggestions based on preferences and restrictions (e.g. vegan, diabetic, gluten-free, low-fat), powered by AI
 
-## 🧠 Business Logic
+## Business Logic
 For full business logic, roles, and backend functionality, see the [Backend Repository](https://github.com/tu-usuario/backend).
 
-## 🎯 Project Purpose
+## Project Purpose
 This project was developed with the goal of learning and implementing multiple key aspects of modern web development:
 
 - 🛒 A functional and realistic e-commerce platform, capable of managing orders directly from the web for employees based on their role.
@@ -172,7 +172,7 @@ This project was developed with the goal of learning and implementing multiple k
 - 💻 Development Best Practices: Use of Hooks (State and Context), JWT authentication, efficient backend connectivity, proper error handling, and minimizing unnecessary re-renders to optimize user experience.
 
 
-## 💾 Installation
+## Installation
 
 ```bash
 # Clone the repository
@@ -188,9 +188,9 @@ npm install
 npm run dev
 ```
 
-## 🔗 API Documentation
+## API Documentation
 This frontend connects to a secure REST API.  
 For full information on available endpoints, request/response formats, see the [backend repository](https://github.com/usuario/backend-saborexpress).
 
-## 👤 Author
+## Author
 Juan Pablo Roman (Juanpablord7)
