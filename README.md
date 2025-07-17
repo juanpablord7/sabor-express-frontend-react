@@ -102,7 +102,6 @@ Este proyecto fue desarrollado con el objetivo de aprender e implementar multipl
 - 💻 Buenas Prácticas de Desarrollo: Uso de Hooks (Estado y Contexto), autenticación con JWT, conexión eficiente al backend, manejo adecuado de errores, y reducción de renderizados innecesarios para optimizar la experiencia del usuario.
 
 
-<br><br><br>
 # English
 
 ## Table of Contents
