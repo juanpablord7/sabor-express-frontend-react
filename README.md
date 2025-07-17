@@ -38,7 +38,7 @@ This repository has the *Frontend* of the project, developed with
 
 ## Tabla de Contenidos
 
-- [💻 Tecnologías](#💻-tecnologías)
+- [💻 Tecnologías](#tecnologías)
 - [🧩 Características](#🧩-características)
 - [🧠 Lógica de Negocio](#🧠-lógica-de-negocio)
 - [🎯 Propósito del Proyecto](#🎯-propósito-del-proyecto)
@@ -46,7 +46,7 @@ This repository has the *Frontend* of the project, developed with
 - [🔗 Documentacion de la API ](#🔗-api-documentation)
 - [👤 Autor](#👤-author)
 
-## 💻 Tecnologías
+## Tecnologías
 
 TypeScript - Lenguaje de programacion
 
