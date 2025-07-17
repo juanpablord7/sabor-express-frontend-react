@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    {/* Use BrowerRouter For Github Pages */}
     <BrowserRouter>
       <App />
     </BrowserRouter>

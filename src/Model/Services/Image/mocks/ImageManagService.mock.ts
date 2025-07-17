@@ -1,6 +1,7 @@
-// src/services/mocks/ImageService.mock.ts
+//For github pages
+//export const imagePath = `/sabor-express-frontend-react/mock-images/`;
 
-export const imagePath = "../docs/mock-images/";
+export const imagePath = `../docs/mock-images/`;
 
 export async function saveImage(imagePath: string, file: File): Promise<boolean> {
   console.log(`[MOCK] Subiendo imagen a: ${imagePath}`, file);
