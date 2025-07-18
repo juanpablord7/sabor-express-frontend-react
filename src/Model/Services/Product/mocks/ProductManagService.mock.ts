@@ -2,7 +2,9 @@ import { Product, ProductRequest } from "../../../Types/ProductTypes";
 
 export let mockProducts: Product[] = [
   { id: 1, category: 1, image: "product/Hamburguesa.jpg", name: "Hamburguesa Clasica", price: 9.99 },
+  { id: 2, category: 0, image: "product/Extrahuevordinario.jpg", name: "Extrahuevordinario", price: 1000 },
   { id: 3, category: 3, image: "product/Pizza_Hawaiana.jpg", name: "Pizza Hawaiana", price: 12.99 },
+  { id: 4, category: 0, image: "product/Magnificarne.jpg", name: "Magnificarne", price: 1000 },
   { id: 5, category: 4, image: "product/Copa_3_Bolas_Helado.jpg", name: "Copa de Helado (3 Bolas)", price: 6.99 },
   { id: 6, category: 0, image: "product/Ensalada_Cesar.jpg", name: "Ensalada Cesar", price: 3.99 },
   { id: 7, category: 3, image: "product/Pizza_Tocineta.jpg", name: "Pizza con Tocineta", price: 10.99 },

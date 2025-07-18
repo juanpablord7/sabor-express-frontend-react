@@ -2,6 +2,11 @@ import { OrderDetail, Orders } from "../../../Types/Ordertypes";
 
 import { mockProducts } from "../../Product/mocks/ProductManagService.mock";
 
+import { mockOrders, mockOrdersDetail } from "./OrderManagService.mock";
+
+import { getMyUser } from "../../User";
+
+/*
 export let mockOrders: Orders[] = [
   {
     id: 8,
@@ -99,14 +104,19 @@ export let mockOrdersDetail: OrderDetail[] = [
     ],
   },
 ];
+*/
 
 // Simular paginación
+// Simular paginación con usuario actual
 export async function getMyOrders(
   page: number,
   limit: number,
   state?: number
 ): Promise<{ totalItems: number; orders: Orders[] }> {
-  let filtered = [...mockOrders];
+  const user = await getMyUser();
+  if (!user) return { totalItems: 0, orders: [] };
+
+  let filtered = mockOrders.filter((o) => o.userId === user.id);
 
   if (state !== undefined) {
     filtered = filtered.filter((o) => o.state === state);
@@ -122,7 +132,7 @@ export async function getMyOrders(
     state: order.state,
     totalPrice: order.totalPrice,
     createdAt: order.createdAt,
-    updatedAt: order.updatedAt
+    updatedAt: order.updatedAt,
   }));
 
   return {
@@ -132,61 +142,69 @@ export async function getMyOrders(
 }
 
 export async function getMyOrderById(id: number): Promise<OrderDetail | undefined> {
-  return mockOrdersDetail.find((order) => order.id === id);
+  const user = await getMyUser();
+  if (!user) return undefined;
+
+  return mockOrdersDetail.find((order) => order.id === id && order.userId === user.id);
 }
+
 
 export async function createMyOrder(
   products: number[],
   quantities: number[]
 ): Promise<OrderDetail | undefined> {
   if (products.length !== quantities.length) return undefined;
+  
+  const user = await getMyUser();
 
-  const newId = Math.max(0, ...mockOrders.map((o) => o.id)) + 1;
+  if(user){
+    const newId = Math.max(0, ...mockOrders.map((o) => o.id)) + 1;
 
-  const now = new Date().toISOString();
+    const now = new Date().toISOString();
 
-  const items = products.map((productId, index) => {
-    const product = mockProducts.find((p) => p.id === productId);
+    const items = products.map((productId, index) => {
+      const product = mockProducts.find((p) => p.id === productId);
 
-    if (!product) throw new Error(`Producto con ID ${productId} no encontrado`);
+      if (!product) throw new Error(`Producto con ID ${productId} no encontrado`);
 
-    return {
-      id: newId * 10 + index,
-      productId: product.id,
-      productName: product.name,
-      quantity: quantities[index],
-      price: product.price,
+      return {
+        id: newId * 10 + index,
+        productId: product.id,
+        productName: product.name,
+        quantity: quantities[index],
+        price: product.price,
+      };
+    });
+
+    const totalPrice = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    const newOrder: OrderDetail = {
+      id: newId,
+      userId: user.id,
+      state: 1,
+      totalPrice: parseFloat(totalPrice.toFixed(2)),
+      createdAt: now,
+      updatedAt: now,
+      items,
     };
-  });
 
-  const totalPrice = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+    // Actualizamos ambos mocks
+    mockOrders.push({
+      id: newOrder.id,
+      userId: newOrder.userId,
+      state: newOrder.state,
+      totalPrice: newOrder.totalPrice,
+      createdAt: newOrder.createdAt,
+      updatedAt: newOrder.updatedAt,
+    });
 
-  const newOrder: OrderDetail = {
-    id: newId,
-    userId: 99, // Usuario simulado
-    state: 1,
-    totalPrice: parseFloat(totalPrice.toFixed(2)),
-    createdAt: now,
-    updatedAt: now,
-    items,
-  };
+    mockOrdersDetail.push(newOrder);
 
-  // Actualizamos ambos mocks
-  mockOrders.push({
-    id: newOrder.id,
-    userId: newOrder.userId,
-    state: newOrder.state,
-    totalPrice: newOrder.totalPrice,
-    createdAt: newOrder.createdAt,
-    updatedAt: newOrder.updatedAt,
-  });
-
-  mockOrdersDetail.push(newOrder);
-
-  return newOrder;
+    return newOrder;
+  }
 }
 
 export async function deleteMyOrder(id: number): Promise<void> {

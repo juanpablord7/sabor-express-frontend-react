@@ -226,6 +226,8 @@ export async function getOrders(
     updatedAt: order.updatedAt,
   }));
 
+  console.log(simplified)
+
   return {
     totalItems: filtered.length,
     orders: simplified,
@@ -236,17 +238,19 @@ export async function getOrderById(id: number): Promise<OrderDetail | undefined>
   return mockOrdersDetail.find((order) => order.id === id);
 }
 
-export async function updateOrderState(id: number, state?: number): Promise<OrderDetail | undefined> {
+export async function updateOrderState(id: number, newState?: number): Promise<OrderDetail | undefined> {
   const index = mockOrdersDetail.findIndex((order) => order.id === id);
+
+  const state = mockOrdersDetail[index].state;
 
   if (index === -1) return undefined;
 
-  console.log("Actual state: " + mockOrdersDetail[index].state)
-  console.log("New state: " + state)
-  if(state){
-    mockOrdersDetail[index].state = state
+  console.log("Actual state: " + state)
+  console.log("New state: " + newState)
+  if(newState){
+    mockOrdersDetail[index].state = newState
   }else{
-    if(index >= 1 && index <= 3){
+    if(state >= 1 && state <= 3){
       // Incrementar el estado en 1
       mockOrdersDetail[index].state += 1;
     }
