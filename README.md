@@ -86,7 +86,7 @@ Bootstrap CSS - Framework de Estilizado para diseño responsivo y componentes vi
 - 🤖 Sugerencias inteligentes de comidas según preferencias y restricciones (ej. vegano, diabetico, sin gluten, bajo en grasa, etc.), basada en inteligencia artificial
 
 ## Lógica de Negocio
-Para la Lógica de Negocio, roles y funcionalidades del backend, reviselo aqui: [Backend Repository](https://github.com/tu-usuario/backend).
+Para la Lógica de Negocio, roles y funcionalidades del backend, reviselo aqui: [Backend Repository](https://github.com/juanpablord7/sabor-express-backend-spring-sql).
 
 ## Propósito del Proyecto
 Este proyecto fue desarrollado con el objetivo de aprender e implementar multiples aspectos clave del desarrollo web moderno:
@@ -154,7 +154,7 @@ Bootstrap CSS – Styling framework for responsive design and UI components.
 - 🤖 Smart food suggestions based on preferences and restrictions (e.g. vegan, diabetic, gluten-free, low-fat), powered by AI
 
 ## Business Logic
-For full business logic, roles, and backend functionality, see the [Backend Repository](https://github.com/tu-usuario/backend).
+For full business logic, roles, and backend functionality, see the [Backend Repository](https://github.com/juanpablord7/sabor-express-backend-spring-sql).
 
 ## Project Purpose
 This project was developed with the goal of learning and implementing multiple key aspects of modern web development:
@@ -190,7 +190,7 @@ npm run dev
 
 ## API Documentation
 This frontend connects to a secure REST API.  
-For full information on available endpoints, request/response formats, see the [backend repository](https://github.com/usuario/backend-saborexpress).
+For full information on available endpoints, request/response formats, see the [backend repository](https://github.com/juanpablord7/sabor-express-backend-spring-sql).
 
 ## Author
 Juan Pablo Roman (Juanpablord7)
